@@ -6,6 +6,8 @@ import {
     getHistoryDisplayValue,
 } from "./utils.js";
 
+const API_BASE_URL = "http://home-core:3000";
+
 function getHistorySlotValue(slot) {
     if (!slot) return 0;
 
@@ -180,7 +182,7 @@ export async function loadHistoryModalPartial() {
     const root = document.getElementById("history-modal-root");
     if (!root) return;
 
-    const response = await fetch("/static/partials/history-modal.html", {
+    const response = await fetch(`${API_BASE_URL}/static/partials/history-modal.html`, {
         headers: { Accept: "text/html" },
         cache: "no-store",
     });
@@ -364,7 +366,7 @@ function renderHistoryAggregateChart(chartId, axisId, items, fuel, yMaxId) {
 }
 
 async function fetchHistoryDay(isoDate) {
-    const response = await fetch(`/api/history/day?date=${encodeURIComponent(isoDate)}`, {
+    const response = await fetch(`${API_BASE_URL}/api/history/day?date=${encodeURIComponent(isoDate)}`, {
         headers: { Accept: "application/json" },
         cache: "no-store",
     });
@@ -377,7 +379,7 @@ async function fetchHistoryDay(isoDate) {
 }
 
 async function fetchHistoryWeek(isoDate) {
-    const response = await fetch(`/api/history/week?date=${encodeURIComponent(isoDate)}`, {
+    const response = await fetch(`${API_BASE_URL}/api/history/week?date=${encodeURIComponent(isoDate)}`, {
         headers: { Accept: "application/json" },
         cache: "no-store",
     });
@@ -390,7 +392,7 @@ async function fetchHistoryWeek(isoDate) {
 }
 
 async function fetchHistoryMonth(isoDate) {
-    const response = await fetch(`/api/history/month?date=${encodeURIComponent(isoDate)}`, {
+    const response = await fetch(`${API_BASE_URL}/api/history/month?date=${encodeURIComponent(isoDate)}`, {
         headers: { Accept: "application/json" },
         cache: "no-store",
     });

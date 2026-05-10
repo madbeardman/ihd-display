@@ -11,6 +11,7 @@ import {
 const DAILY_ELECTRICITY_BUDGET_GBP = 2.0;
 const DAILY_GAS_BUDGET_GBP = 5.0;
 const BATTERY_MAX_KWH = 4.0;
+const API_BASE_URL = "http://home-core:3000";
 
 function getHouseUsageColour(watts) {
     if (watts < 100) return "var(--usage-green-bright)";
@@ -339,7 +340,7 @@ export async function loadDashboard() {
     const output = document.getElementById("output");
 
     try {
-        const response = await fetch("/api/dashboard", {
+        const response = await fetch(`${API_BASE_URL}/api/dashboard`, {
             headers: { Accept: "application/json" },
             cache: "no-store",
         });

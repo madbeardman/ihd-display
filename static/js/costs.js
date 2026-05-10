@@ -1,3 +1,5 @@
+const API_BASE_URL = "http://home-core:3000";
+
 function formatCostValue(value) {
     if (typeof value !== "number" || Number.isNaN(value)) {
         return "£0.00";
@@ -15,7 +17,7 @@ function formatCostValue(value) {
 }
 
 async function fetchDeviceCosts() {
-    const response = await fetch("/api/dashboard", {
+    const response = await fetch(`${API_BASE_URL}/api/dashboard`, {
         headers: { Accept: "application/json" },
         cache: "no-store",
     });
@@ -144,7 +146,7 @@ export async function loadCostUsageModalPartial() {
     const root = document.getElementById("cost-usage-modal-root");
     if (!root) return;
 
-    const response = await fetch("/static/partials/cost-usage-modal.html", {
+    const response = await fetch(`${API_BASE_URL}/static/partials/cost-usage-modal.html`, {
         headers: { Accept: "text/html" },
         cache: "no-store",
     });
