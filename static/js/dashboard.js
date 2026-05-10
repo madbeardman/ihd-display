@@ -7,11 +7,11 @@ import {
     formatPrice,
     isDevMode,
 } from "./utils.js";
+import { API_BASE_URL } from "./config.js";
 
 const DAILY_ELECTRICITY_BUDGET_GBP = 2.0;
 const DAILY_GAS_BUDGET_GBP = 5.0;
 const BATTERY_MAX_KWH = 4.0;
-const API_BASE_URL = "http://home-core:3000";
 
 function getHouseUsageColour(watts) {
     if (watts < 100) return "var(--usage-green-bright)";

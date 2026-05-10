@@ -1,49 +1,26 @@
 #!/bin/bash
 set -e
 
-PI_HOST="colinr@home-ihd.local"
-PI_APP_DIR="~/agile-fetcher"
+PI_HOST="home-core"
+PI_APP_DIR="~/ihd-display"
+SERVICE_NAME="ihd-display"
 
-FORCE_ENV=false
-if [[ "$1" == "--force-env" ]]; then
-  FORCE_ENV=true
-fi
-
-echo "==> Syncing project to Pi..."
+echo "==> Syncing ihd-display to Pi..."
 rsync -avz \
-  --exclude target \
+  --delete \
   --exclude .git \
   --exclude node_modules \
-  --exclude .env \
   --exclude deploy-pi.sh \
   ./ "${PI_HOST}:${PI_APP_DIR}"
 
-echo "==> Handling .env file..."
-
-if $FORCE_ENV; then
-  echo "==> Forcing .env overwrite..."
-  scp .env "${PI_HOST}:${PI_APP_DIR}/.env"
-else
-  echo "==> Checking if .env exists on Pi..."
-
-  ssh "${PI_HOST}" "[ -f ${PI_APP_DIR}/.env ]" || {
-    echo "==> .env missing on Pi, copying..."
-    scp .env "${PI_HOST}:${PI_APP_DIR}/.env"
-  }
-
-  echo "==> .env left unchanged (use --force-env to overwrite)"
-fi
-
-echo "==> Building on Pi..."
+echo "==> Restarting ihd-display service..."
 ssh "${PI_HOST}" "
-  source \$HOME/.cargo/env &&
-  cd ${PI_APP_DIR} &&
-  cargo build --release
+  sudo systemctl restart ${SERVICE_NAME}
 "
 
-echo "==> Restarting IHD device..."
+echo "==> Checking service status..."
 ssh "${PI_HOST}" "
-  sudo reboot
+  sudo systemctl status ${SERVICE_NAME} --no-pager
 "
 
 echo "==> Done."

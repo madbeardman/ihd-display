@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://home-core:3000";
+import { API_BASE_URL } from "./config.js";
 
 async function fetchSettings() {
     const response = await fetch(`${API_BASE_URL}/api/settings`, {

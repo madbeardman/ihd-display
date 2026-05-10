@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://home-core:3000";
+import { API_BASE_URL } from "./config.js";
 
 function formatCostValue(value) {
     if (typeof value !== "number" || Number.isNaN(value)) {

@@ -5,8 +5,7 @@ import {
     formatHistoryKwh,
     getHistoryDisplayValue,
 } from "./utils.js";
-
-const API_BASE_URL = "http://home-core:3000";
+import { API_BASE_URL } from "./config.js";
 
 function getHistorySlotValue(slot) {
     if (!slot) return 0;
