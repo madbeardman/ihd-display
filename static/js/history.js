@@ -182,7 +182,7 @@ export async function loadHistoryModalPartial() {
     const root = document.getElementById("history-modal-root");
     if (!root) return;
 
-    const response = await fetch(`${API_BASE_URL}/static/partials/history-modal.html`, {
+    const response = await fetch(`/static/partials/history-modal.html`, {
         headers: { Accept: "text/html" },
         cache: "no-store",
     });

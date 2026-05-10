@@ -44,7 +44,7 @@ export async function loadSettingsModalPartial() {
     const root = document.getElementById("settings-modal-root");
     if (!root) return;
 
-    const response = await fetch(`${API_BASE_URL}/static/partials/settings-modal.html`, {
+    const response = await fetch(`/static/partials/settings-modal.html`, {
         headers: { Accept: "text/html" },
         cache: "no-store",
     });

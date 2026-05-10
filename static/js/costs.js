@@ -146,7 +146,7 @@ export async function loadCostUsageModalPartial() {
     const root = document.getElementById("cost-usage-modal-root");
     if (!root) return;
 
-    const response = await fetch(`${API_BASE_URL}/static/partials/cost-usage-modal.html`, {
+    const response = await fetch(`/static/partials/cost-usage-modal.html`, {
         headers: { Accept: "text/html" },
         cache: "no-store",
     });
