@@ -66,3 +66,30 @@
   stroke: rgba(255, 255, 255, 0.2);
   stroke-dasharray: 4 4;
 }
+
+@media (min-width: 1000px) and (min-height: 600px) {
+  :root {
+    --main-gauge-width: 285px;
+  }
+
+  .gauge-wrap-house,
+  .gauge-wrap-solar {
+    align-items: flex-end;
+    justify-content: center;
+    transform: translateY(8px);
+  }
+
+  .gauge-house-large,
+  .gauge-solar-large {
+    width: min(var(--main-gauge-width), 100%);
+    height: auto;
+    aspect-ratio: 320 / 180;
+  }
+
+  #usage-panel .gauge-track,
+  #usage-panel .gauge-fill,
+  #solar-panel .gauge-track,
+  #solar-panel .gauge-fill {
+    stroke-width: 24;
+  }
+}

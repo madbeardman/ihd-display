@@ -3,8 +3,8 @@
 > Built for a dedicated always-on home display — fast, local-first, and
 > energy-aware.
 
-A lightweight, real-time home energy dashboard designed for a **5" 800×480
-touchscreen**, combining:
+A lightweight, real-time home energy dashboard designed for a **5" 800×480**, or
+**7" 1280×720 touchscreens**, combining:
 
 - 🧠 Smart Octopus Agile pricing (dynamic window)
 - 🔌 Live Home Assistant power usage

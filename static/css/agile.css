@@ -197,3 +197,26 @@
 .agile-time-label:nth-child(3n) {
   opacity: 0.9;
 }
+
+@media (min-width: 1000px) and (min-height: 600px) {
+  .agile-panel .panel-title {
+    font-size: 1.25rem;
+  }
+
+  .agile-chart {
+    gap: 6px;
+  }
+
+  .agile-bar {
+    max-width: 34px;
+    border-radius: 7px 7px 0 0;
+  }
+
+  .agile-bar::after {
+    font-size: 1.05rem;
+  }
+
+  .agile-time-axis {
+    font-size: 0.85rem;
+  }
+}
