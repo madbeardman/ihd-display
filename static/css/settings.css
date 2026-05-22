@@ -124,3 +124,69 @@
   transform: scale(0.96);
 }
 
+/* =========================
+   Display Profile: 7" Official Touch Display
+========================= */
+
+@media (min-width: 1000px) and (min-height: 600px) {
+
+  .settings-modal {
+    inset: 18px;
+    border-radius: 20px;
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .settings-title {
+    font-size: 1.75rem;
+  }
+
+  .settings-modal-body {
+    gap: 14px;
+  }
+
+  .settings-section {
+    border-radius: 16px;
+    padding: 16px;
+    gap: 10px;
+  }
+
+  .settings-label {
+    font-size: 1.35rem;
+  }
+
+  .settings-value {
+    font-size: 1.05rem;
+    line-height: 1.45;
+  }
+
+  .settings-field-label {
+    font-size: 1.05rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .settings-segmented {
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .settings-segment {
+    height: 46px;
+    border-radius: 12px;
+    font-size: 1.15rem;
+  }
+
+  .settings-modal-footer {
+    gap: 12px;
+  }
+
+  .settings-close-button,
+  .settings-save-button {
+    min-width: 110px;
+    height: 46px;
+    border-radius: 12px;
+    font-size: 1.05rem;
+    padding: 0 20px;
+  }
+}

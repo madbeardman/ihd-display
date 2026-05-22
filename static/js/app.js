@@ -2,6 +2,7 @@ import { loadDashboard, updateClock, advanceUsageRotation } from "./dashboard.js
 import { setupSettingsModal, loadSettingsModalPartial } from "./settings.js";
 import { loadHistoryModalPartial, setupHistoryModal } from "./history.js";
 import { loadCostUsageModalPartial, setupCostUsageModal } from "./costs.js";
+import { loadPowerUsageModalPartial, setupPowerUsageModal } from "./power-usage.js";
 
 async function init() {
     updateClock();
@@ -9,10 +10,13 @@ async function init() {
     await loadHistoryModalPartial();
     await loadSettingsModalPartial();
     await loadCostUsageModalPartial();
+    await loadPowerUsageModalPartial();
 
     setupHistoryModal();
 
     setupCostUsageModal();
+
+    setupPowerUsageModal();
 
     setupSettingsModal(async () => {
         await loadDashboard();
@@ -21,7 +25,7 @@ async function init() {
     await loadDashboard();
 
     setInterval(updateClock, 1000);
-    setInterval(loadDashboard, 5000);
+    setInterval(loadDashboard, 6000);
     setInterval(advanceUsageRotation, 8000);
 }
 

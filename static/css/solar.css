@@ -26,3 +26,16 @@
   line-height: 1;
   color: var(--cheap); /* green = good/export */
 }
+
+/* =========================
+   Display Profile: 7" Official Touch Display
+========================= */
+
+@media (min-width: 1000px) and (min-height: 600px) {
+  .solar-export-label {
+    font-size: 1.8rem;
+  }
+  .solar-export-value {
+    font-size: 1.4rem;
+  }
+}

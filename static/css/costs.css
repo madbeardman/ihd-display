@@ -177,3 +177,72 @@
     #8b5cf6
   );
 }
+
+#power-usage-modal {
+  grid-template-rows: auto 1fr auto;
+}
+
+/* =========================
+   Display Profile: 7" Official Touch Display
+========================= */
+
+@media (min-width: 1000px) and (min-height: 600px) {
+  .cost-usage-modal {
+    inset: 28px 20px 20px 20px;
+    border-radius: 20px;
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .cost-usage-title {
+    font-size: 1.55rem;
+  }
+
+  .cost-usage-subtitle {
+    font-size: 1.05rem;
+  }
+
+  .cost-usage-total {
+    font-size: 1.45rem;
+  }
+
+  .cost-usage-toolbar {
+    gap: 14px;
+  }
+
+  .cost-usage-toggle-group {
+    gap: 8px;
+  }
+
+  .cost-usage-toggle-button,
+  .cost-usage-close-button {
+    height: 44px;
+    border-radius: 12px;
+    font-size: 1.05rem;
+    padding: 0 18px;
+  }
+
+  .cost-usage-list {
+    gap: 18px;
+  }
+
+  .cost-usage-row {
+    gap: 8px;
+  }
+
+  .cost-usage-name {
+    font-size: 1.25rem;
+  }
+
+  .cost-usage-value {
+    font-size: 1.2rem;
+  }
+
+  .cost-usage-bar-track {
+    height: 18px;
+  }
+
+  .cost-usage-empty {
+    font-size: 1.1rem;
+  }
+}

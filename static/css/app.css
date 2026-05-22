@@ -211,6 +211,7 @@ body {
   font-size: 1.35rem;
   font-weight: 700;
   line-height: 1;
+  margin-left: 10px;
 }
 
 .header-status {
@@ -287,6 +288,15 @@ body {
   line-height: 1;
   opacity: 0.9;
   transform: translateY(1px);
+}
+
+.power-icon {
+  opacity: 0.82;
+  transform: translateY(1px);
+}
+
+#power-button:hover .power-icon {
+  opacity: 1;
 }
 
 .poll-indicator {
@@ -381,9 +391,9 @@ body {
   pointer-events: none;
 }
 
-.solar-export-icon:not([hidden]) {
+/* .solar-export-icon:not([hidden]) {
   animation: solarExportPulse 5.0s ease-in-out infinite;
-}
+} */
 
 @keyframes solarExportPulse {
   0%,
@@ -492,23 +502,32 @@ body {
   }
 
   .costs-budget-row {
-    grid-template-columns: 1fr 116px;
-    gap: 12px;
-    padding: 8px 0;
+    grid-template-columns: 1fr 150px;
+    gap: 16px;
+    padding: 10px 0;
   }
 
   .costs-budget-gauge,
   .costs-budget-gauge svg {
-    width: 116px;
-    height: 76px;
+    width: 100%;
+    height: 80px;
   }
 
   .costs-budget-track,
   .costs-budget-fill {
-    stroke-width: 14;
+    stroke-width: 16;
   }
 
   .costs-budget-percent {
-    font-size: 1rem;
+    font-size: 1.15rem;
+    top: 66%;
   }
+
+}
+
+*,
+*::before,
+*::after {
+  animation: none !important;
+  transition: none !important;
 }

@@ -4,16 +4,16 @@
 
 .agile-panel {
   display: grid;
-  grid-template-rows: auto auto;
-  gap: 6px;
-  align-content: start;
+  grid-template-rows: 34px 1fr;
+  gap: 4px;
+  align-content: stretch;
 }
 
 .agile-chart-wrap {
   min-height: 0;
   display: grid;
-  grid-template-rows: 1fr 12px;
-  gap: 1px;
+  grid-template-rows: 1fr 14px;
+  gap: 3px;
 }
 
 /* =========================
@@ -21,7 +21,8 @@
 ========================= */
 
 .agile-chart {
-  height: 108px;
+  height: 118px;
+  padding-top: 22px;
   position: relative;
   background: transparent;
   border: none;
@@ -61,7 +62,7 @@
 }
 
 /* =========================
-   Mixed mode (negative + positive)
+   Mixed mode
 ========================= */
 
 .agile-chart.mixed {
@@ -155,11 +156,11 @@
 
 .agile-chart.positive-only .agile-bar::after,
 .agile-chart.mixed .agile-bar.positive::after {
-  bottom: calc(100% + 4px);
+  bottom: calc(100% + 8px);
 }
 
 .agile-chart.mixed .agile-bar.negative::after {
-  top: calc(100% + 4px);
+  top: calc(100% + 8px);
 }
 
 .agile-bar:hover::after,
@@ -173,7 +174,7 @@
 
 .agile-time-axis {
   position: relative;
-  height: 13px;
+  height: 14px;
   color: var(--muted);
   font-size: 0.6rem;
   overflow: hidden;
@@ -184,7 +185,7 @@
   transform: translateX(-50%);
   white-space: nowrap;
   line-height: 1;
-  top: -1px;
+  top: 0;
   opacity: 0.65;
 }
 
@@ -198,25 +199,57 @@
   opacity: 0.9;
 }
 
+/* =========================
+   Display Profile: 7" Official Touch Display
+========================= */
+
 @media (min-width: 1000px) and (min-height: 600px) {
+  .agile-panel {
+    grid-template-rows: 42px 1fr;
+    gap: 6px;
+  }
+
   .agile-panel .panel-title {
     font-size: 1.25rem;
   }
 
-  .agile-chart {
-    gap: 6px;
+  .agile-chart-wrap {
+    grid-template-rows: 1fr 22px;
+    gap: 4px;
   }
 
-  .agile-bar {
-    max-width: 34px;
+  .agile-chart {
+    height: 170px;
+    padding-top: 0px;
+  }
+
+  .agile-chart.positive-only,
+  .agile-chart.mixed {
+    gap: 7px;
+  }
+
+  .agile-chart.positive-only .agile-bar {
+    min-width: 12px;
+    max-width: none;
     border-radius: 7px 7px 0 0;
+    margin-bottom: 4px;
   }
 
   .agile-bar::after {
-    font-size: 1.05rem;
+    font-size: 1rem;
+  }
+
+  .agile-chart.positive-only .agile-bar::after,
+  .agile-chart.mixed .agile-bar.positive::after {
+    bottom: calc(100% + 10px);
   }
 
   .agile-time-axis {
+    height: 22px;
     font-size: 0.85rem;
+  }
+
+  .agile-time-label {
+    top: 2px;
   }
 }

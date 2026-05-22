@@ -253,3 +253,109 @@
   justify-content: flex-end;
   align-items: center;
 }
+
+/* =========================
+   Display Profile: 7" Official Touch Display
+========================= */
+
+@media (min-width: 1000px) and (min-height: 600px) {
+
+  .history-modal {
+    inset: 18px;
+    border-radius: 20px;
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .history-title {
+    font-size: 1.7rem;
+  }
+
+  .history-date {
+    font-size: 1.05rem;
+  }
+
+  .history-toolbar {
+    gap: 14px;
+  }
+
+  .history-toggle-group,
+  .history-nav-group {
+    gap: 10px;
+  }
+
+  .history-toggle-button,
+  .history-nav-button,
+  .history-close-button {
+    height: 44px;
+    border-radius: 12px;
+    font-size: 1.05rem;
+    padding: 0 18px;
+  }
+
+  .history-modal-body {
+    gap: 14px;
+  }
+
+  .history-card {
+    border-radius: 16px;
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .history-card-title {
+    font-size: 1.3rem;
+  }
+
+  .history-card-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .history-card-total,
+  .history-card-standing {
+    font-size: 1.2rem;
+  }
+
+  .history-chart-container {
+    gap: 16px;
+  }
+
+  .history-y-axis {
+    width: 58px;
+    font-size: 0.9rem;
+  }
+
+  .history-y-max,
+  .history-y-min {
+    font-size: 0.9rem;
+  }
+
+  .history-chart-wrap {
+    grid-template-rows: 1fr 24px;
+    gap: 4px;
+  }
+
+  .history-chart {
+    min-height: 150px;
+    gap: 4px;
+  }
+
+  .history-bar {
+    min-width: 10px;
+    border-radius: 6px 6px 0 0;
+  }
+
+  .history-bar::after {
+    font-size: 0.95rem;
+    bottom: calc(100% + 6px);
+  }
+
+  .history-time-axis {
+    height: 22px;
+    font-size: 0.9rem;
+  }
+
+  .history-time-label {
+    line-height: 1.2;
+  }
+}

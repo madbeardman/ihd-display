@@ -110,3 +110,17 @@
   font-size: 0.7rem;
   line-height: 1;
 }
+
+@media (min-width: 1000px) and (min-height: 600px) {
+  .usage-cost-value {
+    font-size: 1.8rem;
+  }
+
+  .usage-cost-rate {
+    font-size: 1.4rem;
+  }
+
+  #usage-panel .gauge-house-large {
+    width: 100%;
+  }
+}

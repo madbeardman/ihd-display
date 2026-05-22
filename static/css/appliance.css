@@ -62,3 +62,13 @@
   color: var(--cheap);
   font-weight: 900;
 }
+
+@media (min-width: 1000px) and (min-height: 600px) {
+  .appliance-label {
+    font-size: 1.6rem;
+  }
+
+  .appliance-value {
+    font-size: 1.6rem;
+  }
+}
