@@ -5,7 +5,6 @@ import {
     formatClock,
     formatGbp,
     formatPrice,
-    isDevMode,
 } from "./utils.js";
 import { API_BASE_URL } from "./config.js";
 
@@ -21,20 +20,21 @@ function getHouseUsageColour(watts) {
     return "var(--usage-red)";
 }
 
-function getSolarColor(_watts) {
-    return "#16a34a";
-}
+let pollPulseTimer = null;
 
 function pulsePollIndicator() {
     const el = document.getElementById("poll-indicator");
     if (!el) return;
 
-    el.classList.remove("pulse");
-    void el.offsetWidth;
     el.classList.add("pulse");
 
-    setTimeout(() => {
+    if (pollPulseTimer) {
+        clearTimeout(pollPulseTimer);
+    }
+
+    pollPulseTimer = setTimeout(() => {
         el.classList.remove("pulse");
+        pollPulseTimer = null;
     }, 1000);
 }
 
@@ -150,45 +150,6 @@ function updateCostsTodayPanel(metrics) {
         `Budget ${formatGbp(DAILY_GAS_BUDGET_GBP)}`;
 }
 
-function renderUsageRotation() {
-    if (!state.latestUsageMetrics) return;
-
-    const valueEl = document.getElementById("usage-main-value");
-    const subtextEl = document.getElementById("usage-subtext");
-
-    if (!valueEl || !subtextEl) return;
-
-    const states = [
-        {
-            value:
-                typeof state.latestUsageMetrics.current_power_w === "number"
-                    ? `${Math.round(state.latestUsageMetrics.current_power_w)}W`
-                    : "--",
-            subtext: "Electricity",
-        },
-        {
-            value:
-                typeof state.latestUsageMetrics.current_cost_per_hour_gbp === "number"
-                    ? `${formatGbp(state.latestUsageMetrics.current_cost_per_hour_gbp)}/hr`
-                    : "--",
-            subtext:
-                typeof state.latestUsageMetrics.current_price_p_per_kwh === "number"
-                    ? `At ${formatPrice(state.latestUsageMetrics.current_price_p_per_kwh)}`
-                    : "Current cost",
-        },
-    ];
-
-    const current = states[state.usageRotationIndex % states.length];
-    valueEl.textContent = current.value;
-    subtextEl.textContent = current.subtext;
-}
-
-export function advanceUsageRotation() {
-    if (!state.latestUsageMetrics) return;
-    state.usageRotationIndex = (state.usageRotationIndex + 1) % 2;
-    renderUsageRotation();
-}
-
 export function updateClock() {
     const clock = document.getElementById("header-time");
     if (!clock) return;
@@ -273,10 +234,8 @@ function updateSolarGauge(watts) {
         percentage = 0;
     }
 
-    const colour = getSolarColor(clampedWatts);
-
     gaugeArc.setAttribute("stroke-dasharray", `${percentage} 100`);
-    gaugeArc.style.stroke = colour;
+    gaugeArc.style.stroke = "#16a34a";
     gaugeTrack.style.stroke = "";
 }
 
@@ -285,19 +244,11 @@ function updateApplianceRow(appliances) {
     const dishwasherEl = document.getElementById("appliance-dishwasher");
     const dryerEl = document.getElementById("appliance-tumble-dryer");
 
-    if (isDevMode()) {
-        console.log("Updating appliances:", appliances);
-    }
-
     if (!washerEl || !dishwasherEl || !dryerEl || !appliances) return;
 
     const washer = appliances.washing_machine?.display ?? "--";
     const dishwasher = appliances.dishwasher?.display ?? "--";
     const dryer = appliances.tumble_dryer?.display ?? "--";
-
-    if (isDevMode()) {
-        console.log("Appliance display values:", { washer, dishwasher, dryer });
-    }
 
     washerEl.textContent = washer;
     dishwasherEl.textContent = dishwasher;
@@ -308,7 +259,7 @@ function updateApplianceRow(appliances) {
     dryerEl.classList.toggle("running", appliances.tumble_dryer?.running === true);
 }
 
-function updateHouseUsagePanel(metrics, live) {
+function updateHouseUsagePanel(metrics) {
     const loadEl = document.getElementById("usage-load-value");
     const costEl = document.getElementById("usage-cost-value");
     const rateEl = document.getElementById("usage-cost-rate");
@@ -318,7 +269,6 @@ function updateHouseUsagePanel(metrics, live) {
     const watts = metrics.current_power_w ?? 0;
     const costPerHour = metrics.current_cost_per_hour_gbp ?? 0;
     const price = metrics.current_price_p_per_kwh ?? null;
-    const demand = live?.octopus_current_demand_w ?? 0;
 
     // --- Main values ---
     loadEl.textContent = `${Math.round(Math.abs(watts))}W`;
@@ -331,13 +281,15 @@ export async function loadDashboard() {
     if (state.dashboardRequestInFlight) return;
     state.dashboardRequestInFlight = true;
 
-    const output = document.getElementById("output");
-
     try {
-        const response = await fetchWithTimeout(`${API_BASE_URL}/api/dashboard`, {
-            headers: { Accept: "application/json" },
-            cache: "no-store",
-        });
+        const response = await fetchWithTimeout(
+            `${API_BASE_URL}/api/dashboard`,
+            {
+                headers: { Accept: "application/json" },
+                cache: "no-store",
+            },
+            5000,
+        );
 
         if (!response.ok) {
             throw new Error(`HTTP ${response.status}`);
@@ -348,7 +300,7 @@ export async function loadDashboard() {
         setPollIndicatorOk();
         pulsePollIndicator();
 
-        updateHouseUsagePanel(data.usage_metrics, data.live);
+        updateHouseUsagePanel(data.usage_metrics);
         updateCostsTodayPanel(data.usage_metrics);
         updateBatteryPanel(data.battery);
 
@@ -379,12 +331,15 @@ export async function loadDashboard() {
 
         updateSolarExportIcon(data.live?.octopus_current_demand_w);
 
-        renderAgileChart(data.agile);
+        const agileSignature = getAgileSignature(data.agile);
+
+        if (state.lastAgileSignature !== agileSignature) {
+            state.lastAgileSignature = agileSignature;
+            renderAgileChart(data.agile);
+        }
+
         updateApplianceRow(data.appliances);
     } catch (error) {
-        const dashboard = document.getElementById("dashboard");
-        const devMode = dashboard?.dataset.devMode === "true";
-
         updateSolarExportIcon(0);
         setPollIndicatorError();
 
@@ -414,4 +369,12 @@ async function fetchWithTimeout(url, options = {}, timeout = 5000) {
     } finally {
         clearTimeout(timer);
     }
+}
+
+function getAgileSignature(agile) {
+    if (!agile?.slots) return "";
+
+    return agile.slots
+        .map((slot) => `${slot.source_day}:${slot.source_index}:${slot.value_inc_vat}:${slot.is_now}`)
+        .join("|");
 }

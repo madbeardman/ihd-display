@@ -26,7 +26,6 @@ async function init() {
 
     setInterval(updateClock, 1000);
     setInterval(loadDashboard, 6000);
-    setInterval(advanceUsageRotation, 8000);
 }
 
 init();

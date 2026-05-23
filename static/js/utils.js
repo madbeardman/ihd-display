@@ -1,10 +1,5 @@
 import { state } from "./state.js";
 
-export function isDevMode() {
-    const dashboard = document.getElementById("dashboard");
-    return dashboard?.dataset.devMode === "true";
-}
-
 export function formatPrice(value) {
     return `${value.toFixed(2)}p`;
 }
