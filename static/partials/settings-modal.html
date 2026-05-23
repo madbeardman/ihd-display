@@ -8,41 +8,130 @@
     </div>
 
     <div class="settings-modal-body">
-        <div class="settings-section">
-            <div class="settings-label">Display</div>
-            <div class="settings-value">
-                Choose how many Agile pricing slots are shown on the dashboard.
+
+        <details class="settings-section" open>
+            <summary class="settings-section-summary">
+                <span class="settings-label">Display</span>
+                <span class="settings-chevron">›</span>
+            </summary>
+
+            <div class="settings-section-content">
+                <div class="settings-value">
+                    Choose how many Agile pricing slots are shown on the dashboard.
+                </div>
+
+                <div class="settings-field-label">Agile chart range</div>
+
+                <div class="settings-segmented" id="settings-agile-window-slots" role="group"
+                    aria-label="Agile chart range">
+                    <button type="button" class="settings-segment" data-value="24">12h</button>
+                    <button type="button" class="settings-segment" data-value="36">18h</button>
+                    <button type="button" class="settings-segment" data-value="48">24h</button>
+                </div>
             </div>
+        </details>
 
-            <div class="settings-field-label">
-                Agile chart range
+        <details class="settings-section">
+            <summary class="settings-section-summary">
+                <span class="settings-label">Home Assistant</span>
+                <span class="settings-chevron">›</span>
+            </summary>
+
+            <div class="settings-section-content">
+                <div class="settings-subsection">
+                    <div class="settings-field-label">Connection</div>
+                    <div class="settings-value">Configure the Home Assistant backend connection.</div>
+                </div>
+
+                <div class="settings-subsection">
+                    <div class="settings-field-label">
+                        Device Links
+                    </div>
+
+                    <div class="settings-value">
+                        Choose which Home Assistant power sensors are tracked by the IHD.
+                    </div>
+
+                    <button class="settings-action-button" id="settings-device-tracking-button" type="button">
+                        Manage tracked devices
+                    </button>
+
+                    <div class="settings-device-tracking-panel" id="settings-device-tracking-panel" hidden>
+
+                        <div class="settings-device-header">
+                            <div>
+                                <div class="settings-field-label">
+                                    Device Tracking
+                                </div>
+
+                                <div class="settings-value">
+                                    Select which Home Assistant power sensors appear in Device Costs and Power Usage.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings-device-status">
+                            Connected · -- sensors found · waiting
+                        </div>
+
+                        <div class="settings-device-actions">
+                            <button class="settings-action-button" disabled>
+                                Refresh
+                            </button>
+
+                            <button class="settings-action-button" disabled>
+                                Select Active
+                            </button>
+
+                            <button class="settings-action-button" disabled>
+                                Clear
+                            </button>
+                        </div>
+
+                        <div class="settings-device-list">
+
+                            <div class="settings-device-placeholder">
+                                Device discovery coming soon
+                            </div>
+
+                        </div>
+
+                        <button class="settings-save-tracked" disabled>
+                            Save tracked devices
+                        </button>
+
+                    </div>
+
+                </div>
             </div>
+        </details>
 
-            <div class="settings-segmented" id="settings-agile-window-slots" role="group"
-                aria-label="Agile chart range">
-                <button type="button" class="settings-segment" data-value="24">12h</button>
-                <button type="button" class="settings-segment" data-value="36">18h</button>
-                <button type="button" class="settings-segment" data-value="48">24h</button>
+        <details class="settings-section">
+            <summary class="settings-section-summary">
+                <span class="settings-label">System</span>
+                <span class="settings-chevron">›</span>
+            </summary>
+
+            <div class="settings-section-content">
+                <div class="settings-value">Health endpoint and system information later.</div>
             </div>
-        </div>
+        </details>
 
-        <div class="settings-section">
-            <div class="settings-label">System</div>
-            <div class="settings-value">More system settings later</div>
-        </div>
+        <details class="settings-section">
+            <summary class="settings-section-summary">
+                <span class="settings-label">Recommendations</span>
+                <span class="settings-chevron">›</span>
+            </summary>
 
-        <div class="settings-section">
-            <div class="settings-label">Recommendations</div>
-            <div class="settings-value">Shower timings later</div>
-        </div>
+            <div class="settings-section-content">
+                <div class="settings-value">Shower timings and appliance recommendations later.</div>
+            </div>
+        </details>
+
     </div>
 
     <div class="settings-modal-footer">
-        <button class="settings-close-button" id="settings-close-button" type="button">
-            Close
-        </button>
-        <button class="settings-save-button" id="settings-save-button" type="button">
-            Save
-        </button>
+        <button class="settings-close-button" id="settings-close-button" type="button">Close</button>
+        <button class="settings-save-button" id="settings-save-button" type="button">Save</button>
     </div>
 </section>

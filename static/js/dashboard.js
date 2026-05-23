@@ -25,12 +25,6 @@ function getSolarColor(_watts) {
     return "#16a34a";
 }
 
-function showPollIndicator() {
-    const el = document.getElementById("poll-indicator");
-    if (!el) return;
-    el.style.display = "inline-block";
-}
-
 function pulsePollIndicator() {
     const el = document.getElementById("poll-indicator");
     if (!el) return;
@@ -340,7 +334,7 @@ export async function loadDashboard() {
     const output = document.getElementById("output");
 
     try {
-        const response = await fetch(`${API_BASE_URL}/api/dashboard`, {
+        const response = await fetchWithTimeout(`${API_BASE_URL}/api/dashboard`, {
             headers: { Accept: "application/json" },
             cache: "no-store",
         });
@@ -351,18 +345,8 @@ export async function loadDashboard() {
 
         const data = await response.json();
 
-        showPollIndicator();
         setPollIndicatorOk();
         pulsePollIndicator();
-
-        const indicator = document.getElementById("poll-indicator");
-        if (indicator) {
-            indicator.style.display = "inline-block";
-        }
-
-        if (output) {
-            output.textContent = JSON.stringify(data, null, 2);
-        }
 
         updateHouseUsagePanel(data.usage_metrics, data.live);
         updateCostsTodayPanel(data.usage_metrics);
@@ -401,20 +385,33 @@ export async function loadDashboard() {
         const dashboard = document.getElementById("dashboard");
         const devMode = dashboard?.dataset.devMode === "true";
 
-        const updatedEl = document.getElementById("last-updated");
-        if (updatedEl) {
-            updatedEl.textContent = devMode ? "Update failed" : "";
-        }
-
         updateSolarExportIcon(0);
-
-        showPollIndicator();
         setPollIndicatorError();
 
-        if (output) {
-            output.textContent = String(error);
-        }
     } finally {
         state.dashboardRequestInFlight = false;
+    }
+}
+
+async function fetchWithTimeout(url, options = {}, timeout = 5000) {
+    const controller = new AbortController();
+
+    const timer = setTimeout(() => {
+        controller.abort();
+    }, timeout);
+
+    try {
+        return await fetch(url, {
+            ...options,
+            signal: controller.signal,
+        });
+    } catch (error) {
+        if (error.name === "AbortError") {
+            throw new Error(`Request timed out after ${timeout}ms`);
+        }
+
+        throw error;
+    } finally {
+        clearTimeout(timer);
     }
 }

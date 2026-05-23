@@ -306,6 +306,7 @@ body {
   background: #1f7a3a;
   transition: background-color 1s ease;
   margin-left: 14px;
+  display: inline-block;
 }
 
 .poll-indicator.pulse {

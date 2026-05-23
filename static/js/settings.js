@@ -112,6 +112,29 @@ export async function setupSettingsModal(onSettingsSaved) {
             return;
         }
 
+        if (target.id === "settings-device-tracking-button") {
+            const trackingPanel = document.getElementById(
+                "settings-device-tracking-panel",
+            );
+
+            if (!trackingPanel) return;
+
+            const opening = trackingPanel.hasAttribute("hidden");
+
+            trackingPanel.toggleAttribute("hidden");
+
+            if (opening) {
+                requestAnimationFrame(() => {
+                    trackingPanel.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                    });
+                });
+            }
+
+            return;
+        }
+
         if (target.classList.contains("settings-segment")) {
             const container = target.parentElement;
             if (!container) return;
