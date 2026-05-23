@@ -1,4 +1,4 @@
-import { loadDashboard, updateClock, advanceUsageRotation } from "./dashboard.js";
+import { loadDashboard, updateClock } from "./dashboard.js";
 import { setupSettingsModal, loadSettingsModalPartial } from "./settings.js";
 import { loadHistoryModalPartial, setupHistoryModal } from "./history.js";
 import { loadCostUsageModalPartial, setupCostUsageModal } from "./costs.js";
