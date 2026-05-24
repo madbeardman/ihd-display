@@ -226,7 +226,6 @@
   white-space: nowrap;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.15s ease;
 }
 
 .history-bar:hover::after,

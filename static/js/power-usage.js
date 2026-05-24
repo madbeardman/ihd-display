@@ -89,9 +89,8 @@ function renderPowerUsageList(items) {
         barFill.className = "cost-usage-bar-fill cost-usage-bar-current";
         barFill.style.width = "0%";
 
-        requestAnimationFrame(() => {
-            barFill.style.width = `${Math.max((item.power_w / maxValue) * 100, 4)}%`;
-        });
+        barFill.style.width =
+            `${Math.max((item.power_w / maxValue) * 100, 4)}%`;
 
         barTrack.appendChild(barFill);
         row.appendChild(header);

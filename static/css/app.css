@@ -173,10 +173,6 @@ body {
   stroke: rgba(255, 255, 255, 0.12);
 }
 
-.costs-budget-fill {
-  transition: stroke-dasharray 0.3s ease;
-}
-
 .costs-budget-fill.electricity {
   stroke: #facc15;
 }
@@ -304,7 +300,7 @@ body {
   height: 14px;
   border-radius: 50%;
   background: #1f7a3a;
-  transition: background-color 1s ease;
+  /* transition: background-color 1s ease; */
   margin-left: 14px;
   display: inline-block;
 }
@@ -391,10 +387,6 @@ body {
   text-shadow: 0 0 14px rgba(250, 204, 21, 0.45);
   pointer-events: none;
 }
-
-/* .solar-export-icon:not([hidden]) {
-  animation: solarExportPulse 5.0s ease-in-out infinite;
-} */
 
 @keyframes solarExportPulse {
   0%,
@@ -524,11 +516,4 @@ body {
     top: 66%;
   }
 
-}
-
-*,
-*::before,
-*::after {
-  animation: none !important;
-  transition: none !important;
 }

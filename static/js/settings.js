@@ -124,11 +124,9 @@ export async function setupSettingsModal(onSettingsSaved) {
             trackingPanel.toggleAttribute("hidden");
 
             if (opening) {
-                requestAnimationFrame(() => {
-                    trackingPanel.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start",
-                    });
+                trackingPanel.scrollIntoView({
+                    behavior: "auto",
+                    block: "start",
                 });
             }
 

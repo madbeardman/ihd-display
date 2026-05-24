@@ -56,9 +56,6 @@
   position: relative;
   margin-bottom: 3px;
   opacity: 0.95;
-  transition:
-    transform 0.15s ease,
-    opacity 0.15s ease;
 }
 
 /* =========================
@@ -93,9 +90,6 @@
   left: 0;
   right: 0;
   opacity: 0.95;
-  transition:
-    transform 0.15s ease,
-    opacity 0.15s ease;
 }
 
 .agile-chart.mixed .agile-bar.positive {
@@ -151,7 +145,6 @@
   white-space: nowrap;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.15s ease;
 }
 
 .agile-chart.positive-only .agile-bar::after,
