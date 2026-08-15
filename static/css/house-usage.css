@@ -121,6 +121,6 @@
   }
 
   #usage-panel .gauge-house-large {
-    width: 100%;
+    width: min(var(--main-gauge-width), 100%);
   }
 }

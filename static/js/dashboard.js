@@ -222,7 +222,7 @@ function updateSolarGauge(watts) {
 
     if (!gaugeArc || !gaugeTrack || typeof watts !== "number") return;
 
-    const maxWatts = 3480;
+    const maxWatts = 5000;
     const clampedWatts = clamp(watts, 0, maxWatts);
 
     const linearRatio = clampedWatts / maxWatts;
