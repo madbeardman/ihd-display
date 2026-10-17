@@ -1,77 +1,111 @@
 /* =========================
-   Battery Panel (New)
+   Battery Panel - IHD v2
 ========================= */
 
-.battery-panel-body {
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  align-items: center;
-  justify-items: center;
-  gap: 6px;
+#battery-panel {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
 }
 
-.battery-top {
-  text-align: center;
+/* Battery percentage directly below title */
+
+#battery-panel .battery-percentage {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    color: #f5f5f5;
+    text-align: left;
+    flex-shrink: 0;
 }
 
-.battery-percentage {
-  font-size: 1.4rem;
-  font-weight: 800;
-  line-height: 1;
+/* Body occupies remaining panel space */
+
+#battery-panel .battery-panel-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: 8px 0 4px;
 }
 
-.battery-kwh {
-  font-size: 0.8rem;
-  color: var(--muted);
+/* Battery graphic */
+
+#battery-panel .battery-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
 }
 
-/* Battery visual */
+/* Fixed maximum size, constrained by available space */
 
-.battery-visual {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+#battery-panel .battery-shell {
+    position: relative;
+
+    width: 64px;
+    height: min(180px, 100%);
+
+    flex-shrink: 0;
+    box-sizing: border-box;
+
+    border: 3px solid var(--panel-border);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.04);
+
+    overflow: hidden;
 }
 
-.battery-shell {
-  width: 34px;
-  height: 90px;
-  border-radius: 10px;
-  border: 2px solid var(--panel-border);
-  background: rgba(255,255,255,0.04);
-  position: relative;
-  overflow: hidden;
+/* Battery terminal */
+
+#battery-panel .battery-shell::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 24px;
+    height: 6px;
+
+    background: var(--panel-border);
+    border-radius: 0 0 3px 3px;
+    z-index: 1;
 }
 
-/* battery tip */
-.battery-shell::before {
-  content: "";
-  position: absolute;
-  top: -6px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 14px;
-  height: 6px;
-  border-radius: 2px;
-  background: var(--panel-border);
+/* Battery charge fill */
+
+#battery-panel .battery-fill {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+    height: 0%;
+
+    background: linear-gradient(to top, #22c55e, #4ade80);
+
+    transition: none;
+    animation: none;
 }
 
-/* fill */
+/* Status anchored at bottom */
 
-.battery-fill {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 0%;
-  background: var(--cheap);
-  background: linear-gradient(to top, #22c55e, #4ade80);
-}
+#battery-panel .battery-status {
+    flex-shrink: 0;
 
-/* status */
+    font-size: 1.25rem;
+    font-weight: 800;
+    line-height: 1.2;
+    text-align: center;
+    color: #f5f5f5;
 
-.battery-status {
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-align: center;
-  color: var(--cheap);
+    white-space: nowrap;
+    padding: 6px 0 0;
 }

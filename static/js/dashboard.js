@@ -10,7 +10,6 @@ import { API_BASE_URL } from "./config.js";
 
 const DAILY_ELECTRICITY_BUDGET_GBP = 2.0;
 const DAILY_GAS_BUDGET_GBP = 5.0;
-const BATTERY_MAX_KWH = 4.0;
 
 function getHouseUsageColour(watts) {
     if (watts < 100) return "var(--usage-green-bright)";
@@ -18,6 +17,18 @@ function getHouseUsageColour(watts) {
     if (watts < 1000) return "var(--normal)";
     if (watts < 2000) return "var(--usage-orange)";
     return "var(--usage-red)";
+}
+
+function setText(element, value) {
+    if (element.textContent !== value) {
+        element.textContent = value;
+    }
+}
+
+function setStyle(element, property, value) {
+    if (element.style[property] !== value) {
+        element.style[property] = value;
+    }
 }
 
 let pollPulseTimer = null;
@@ -156,41 +167,57 @@ export function updateClock() {
     clock.textContent = formatClock();
 }
 
-function updateBatteryPanel(battery) {
+function updateBatteryPanel(live) {
     const percentEl = document.getElementById("battery-percentage");
-    const kwhEl = document.getElementById("battery-kwh");
     const fillEl = document.getElementById("battery-fill");
     const statusEl = document.getElementById("battery-status");
 
-    if (!percentEl || !kwhEl || !fillEl || !statusEl) return;
+    if (!percentEl || !fillEl || !statusEl) return;
 
-    if (!battery || typeof battery.soc !== "number") {
-        percentEl.textContent = "--";
-        kwhEl.textContent = "--";
-        statusEl.textContent = "Unavailable";
-        fillEl.style.height = "0%";
+    const soc = live?.battery_soc_percent;
+    const status = live?.battery_status;
+
+    const validSoc =
+        typeof soc === "number" &&
+        Number.isFinite(soc) &&
+        soc >= 0 &&
+        soc <= 100;
+
+    const validStatus = [
+        "charging",
+        "discharging",
+        "idle",
+    ].includes(status);
+
+    if (!validSoc || !validStatus) {
+        setText(percentEl, "--");
+        setText(statusEl, "Unavailable");
+        setStyle(fillEl, "height", "0%");
         return;
     }
 
-    const soc = Math.round(battery.soc);
-    const kwh = (soc / 100) * BATTERY_MAX_KWH;
+    const percentage = Math.round(soc);
 
-    percentEl.textContent = `${soc}%`;
-    kwhEl.textContent = `${kwh.toFixed(1)}kWh`;
+    setText(percentEl, `${percentage}%`);
+    setStyle(fillEl, "height", `${percentage}%`);
 
-    fillEl.style.height = `${soc}%`;
+    let statusText = "Idle";
 
-    // status logic
-    if (battery.power_w > 50) {
-        statusEl.textContent = "Charging";
-        statusEl.style.color = "var(--cheap)";
-    } else if (battery.power_w < -50) {
-        statusEl.textContent = "Discharging";
-        statusEl.style.color = "var(--usage-orange)";
-    } else {
-        statusEl.textContent = "Idle";
-        statusEl.style.color = "var(--muted)";
+    if (status === "charging") {
+        const power = live.battery_charge_w;
+
+        statusText = Number.isFinite(power)
+            ? `Charging - ${Math.round(power)}W`
+            : "Charging";
+    } else if (status === "discharging") {
+        const power = live.battery_discharge_w;
+
+        statusText = Number.isFinite(power)
+            ? `Discharging - ${Math.round(power)}W`
+            : "Discharging";
     }
+
+    setText(statusEl, statusText);
 }
 
 function updateHouseUsageGauge(watts) {
@@ -302,7 +329,7 @@ export async function loadDashboard() {
 
         updateHouseUsagePanel(data.usage_metrics);
         updateCostsTodayPanel(data.usage_metrics);
-        updateBatteryPanel(data.battery);
+        updateBatteryPanel(data.live);
 
         const housePower =
             typeof data.usage_metrics?.current_power_w === "number"
@@ -311,8 +338,8 @@ export async function loadDashboard() {
 
         updateHouseUsageGauge(Math.round(housePower));
 
-        if (typeof data.live?.solar_generation_w === "number") {
-            let solar = Math.round(data.live.solar_generation_w);
+        if (typeof data.live?.total_solar_generation_w === "number") {
+            let solar = Math.round(data.live.total_solar_generation_w);
 
             if (solar < 10) {
                 solar = 0;
