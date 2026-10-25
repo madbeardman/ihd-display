@@ -31,7 +31,7 @@ screen.
 It includes:
 
 - Real-time clock
-- Hybrid **House Usage** panel:
+- Hybrid **Grid Import** panel:
   - Current house load in watts
   - Current cost per hour
   - Current Agile unit rate
@@ -227,7 +227,7 @@ http://localhost:3000
 
 | Purpose | Source |
 |---|---|
-| House load | Home Assistant house usage sensor |
+| Home Load | Home Assistant house usage sensor |
 | Grid import / export | Octopus Mini current demand |
 | Solar generation | Home Assistant solar power sensor |
 | Electricity cost today | Octopus Energy Home Assistant sensor |
