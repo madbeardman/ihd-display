@@ -356,7 +356,7 @@ export async function loadDashboard() {
             updateSolarGauge(0);
         }
 
-        updateSolarExportIcon(data.live?.octopus_current_demand_w);
+        updateSolarExportIcon(data.live?.grid_power_net_w);
 
         const agileSignature = getAgileSignature(data.agile);
 
